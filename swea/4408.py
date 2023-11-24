@@ -1,15 +1,11 @@
 for test_case in range(1, int(input()) + 1):
-    n, m, k = map(int, input().split())
-    lst = list(map(int, input().split()))
+    n = int(input())
+    cnts = [0] * 200
+    for _ in range(n):
+        s, e = map(int, input().split())
+        if s > e:
+            s, e = e, s
+        for i in range((s - 1) // 2, (e - 1) // 2 + 1):
+            cnts[i] += 1
 
-    lst.sort()
-
-    ans = "Possible"
-    cnt = 0
-    for t in lst:
-        cnt += 1
-        if (t // m) * k < cnt:
-            ans = "Impossible"
-            break
-
-    print(f"#{test_case} {ans}")
+    print(f"#{test_case} {max(cnts)}")
