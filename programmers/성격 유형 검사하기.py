@@ -1,5 +1,4 @@
 def solution(survey, choices):
-    feature_mapping = {1: "RT", 2: "CF", 3: "JM", 4: "AN"}
     char_dict = {"R": 0, "T": 0, "C": 0, "F": 0, "J": 0, "M": 0, "A": 0, "N": 0}
     for sur, choice in zip(survey, choices):
         a = sur[0]
