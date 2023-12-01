@@ -1,19 +1,25 @@
 n = int(input())
-arr = [[0] * 30 for _ in range(30)]
+arr = [[0] * 102 for _ in range(102)]
 
 for _ in range(n):
     # 해당 영역을 1로 표시
     sj, si = map(int, input().split())
     for i in range(si, si + 10):
         for j in range(sj, sj + 10):
-            if i == si or i == si + 9 or j == sj or j == sj + 9:
-                arr[i][j] = 1
-            else:
-                arr[i][j] = 0
+            arr[i][j] = 1
+
+arr_t = list(zip(*arr))
 
 
-ans = 0
-for lst in arr:
-    print(*lst)
-    ans += sum(lst)
+def count(arr):
+    cnt = 0
+    for lst in arr:
+        for i in range(1, len(lst)):
+            if lst[i - 1] != lst[i]:
+                cnt += 1
+    return cnt
+
+
+ans = count(arr) + count(arr_t)
+
 print(ans)
