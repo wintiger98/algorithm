@@ -1,18 +1,19 @@
-import heapq
-import sys
+L = int(input())
+N = int(input())
 
-input = sys.stdin.readline
+lst = [1] * (L + 1)
+mx1 = mx2 = mx1_i = mx2_i = 0
 
-heap = []
+for i in range(1, N + 1):
+    s, e = map(int, input().split())
+    if mx1 < (e - s + 1):
+        mx1, mx1_i = e - s + 1, i
 
-n = int(input())
+    cnt = sum(lst[s : e + 1])
+    if mx2 < cnt:
+        mx2, mx2_i = cnt, i
 
-for _ in range(n):
-    num = int(input())
-    if num > 0:
-        heapq.heappush(heap, (-num, num))
-    else:
-        if heap:
-            print(heapq.heappop(heap)[1])
-        else:
-            print(0)
+    lst[s : e + 1] = [0] * (s - e + 1)
+
+print(mx1_i)
+print(mx2_i)
