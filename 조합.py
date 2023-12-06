@@ -1,3 +1,4 @@
+# 수열에서 n개 뽑는 방법
 def gen_combinations(arr, n):
     result = []
 
