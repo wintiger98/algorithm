@@ -1,3 +1,7 @@
+# N = 1
+# lst = []
+
+
 def inorder(n):
     global cnt
     if n <= N:
