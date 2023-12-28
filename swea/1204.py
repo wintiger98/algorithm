@@ -3,8 +3,7 @@ for _ in range(1, int(input()) + 1):
 
     nums = list(map(int, input().split()))
 
-    print(f"#{n}", end=" ")
-    scores = [i for i in range(101)]
+    scores = [0 for i in range(101)]
 
     for num in nums:
         scores[num] += 1
@@ -13,5 +12,5 @@ for _ in range(1, int(input()) + 1):
 
     for i in range(100, -1, -1):
         if scores[i] == many_score:
-            print(i)
+            print(f"#{n} {i}")
             break
