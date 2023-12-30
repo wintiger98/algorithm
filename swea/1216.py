@@ -1,4 +1,3 @@
-# 회문 여부
 def is_pal(arr, leng):
     for lst in arr:
         for i in range(0, 100 - leng + 1):
