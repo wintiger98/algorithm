@@ -1,4 +1,3 @@
-# 미래도시
 INF = int(1e9)
 n, m = map(int, input().split())
 graph = [[INF] * (n + 1) for _ in range(n + 1)]
