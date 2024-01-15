@@ -2,7 +2,7 @@ for test_case in range(1, int(input()) + 1):
     n = int(input())
     visited = [0 for _ in range(10)]
     answer = 1
-
+    
     while sum(visited) < 10:
         tmp_n = n * answer
         for i in str(tmp_n):
