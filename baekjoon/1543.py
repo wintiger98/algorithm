@@ -5,6 +5,7 @@ input = sys.stdin.readline
 note = input().strip()
 to_find = input().strip()
 
+
 ans = 0
 while True:
     cur_idx = note.find(to_find)
