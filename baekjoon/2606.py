@@ -15,6 +15,7 @@ for _ in range(m):
 
 visited = [False] * (n + 1)
 
+
 def dfs(v):
     global ans
     visited[v] = True
