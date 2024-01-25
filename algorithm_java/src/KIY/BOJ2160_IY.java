@@ -1,4 +1,4 @@
-package BOJ;
+package KIY;
 
 import java.io.*;
 import java.util.LinkedList;
