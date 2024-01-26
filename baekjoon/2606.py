@@ -19,7 +19,6 @@ visited = [False] * (n + 1)
 def dfs(v):
     global ans
     visited[v] = True
-
     ans += 1
 
     for i in graph[v]:
