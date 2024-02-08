@@ -1,5 +1,3 @@
-package boj_star;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

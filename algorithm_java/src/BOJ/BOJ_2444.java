@@ -1,5 +1,3 @@
-package boj_star;
-
 import java.util.Scanner;
 
 public class BOJ_2444 {
