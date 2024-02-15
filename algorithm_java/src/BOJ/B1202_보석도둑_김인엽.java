@@ -1,12 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-// 실패
+// 	130268	1764
 public class B1202_보석도둑_김인엽 {
 
-  static class Jewerly implements Comparable<Jewerly> {
+  static class Jewerly {
 
     int m;
     int v;
@@ -17,11 +17,10 @@ public class B1202_보석도둑_김인엽 {
     }
 
     @Override
-    public int compareTo(Jewerly o) {
-      if(this.m == o.m)
-        return o.v - this.v; // 가치 내림차순
-      return this.m - o.m;
+    public String toString() {
+      return "Jewerly [m=" + m + ", v=" + v + "]";
     }
+
   }
 
   public static void main(String[] args) throws IOException {
@@ -30,34 +29,57 @@ public class B1202_보석도둑_김인엽 {
     int N = Integer.parseInt(st.nextToken());
     int K = Integer.parseInt(st.nextToken());
 
-    Jewerly[] jewInfos = new Jewerly[N];
+    PriorityQueue<Jewerly> pqJewerly = new PriorityQueue<>((j1, j2) -> {
+      if (j1.m == j2.m) {
+        return j2.v - j1.v; // 가치 내림차순
+      }
+      return j1.m - j2.m;
+    });
+    PriorityQueue<Integer> pqBag = new PriorityQueue<>(); // 오름차순
+
     for (int i = 0; i < N; i++) {
       st = new StringTokenizer(br.readLine());
       int m = Integer.parseInt(st.nextToken());
       int v = Integer.parseInt(st.nextToken());
-      jewInfos[i] = new Jewerly(m, v);
+      pqJewerly.add(new Jewerly(m, v));
     }
 
-    Arrays.sort(jewInfos); // 보석 정보를 가치 기준 내림차순
-
-    int[] bags = new int[K];
     for (int i = 0; i < K; i++) {
-      bags[i] = Integer.parseInt(br.readLine());
+      pqBag.add(Integer.parseInt(br.readLine()));
     }
-    Arrays.sort(bags); // 가방 무게 기준 오른차순
 
     long answer = 0; // 보석 가격 합 최댓값(int 범위로 해결 안됨)
-    boolean[] selected = new boolean[N]; // 해당 보석이 선택되었는지 기록
-    for (int bag : bags) { // 낮은 무게 가방 순으로 탐색 : 가능한 가장 높은 가치의 보석부터
-      for (int i = 0; i < N; i++) {
-        if (!selected[i]
-            && jewInfos[i].m <= bag) { // 선택되지 않은 요소 중 높은 요소를 찾았으면, selected 처리 및 정답에 추가
-          selected[i] = true;
-          answer += jewInfos[i].v;
+    PriorityQueue<Jewerly> tmpPqJewerly = new PriorityQueue<>((j1, j2) -> {
+      if (j1.v == j2.v) {
+        return j1.m - j2.m;
+      }
+      return j2.v - j1.v;
+    }); // 짬통
+
+    // 가방 다 쓸 때까지
+    while (!pqBag.isEmpty()) {
+      int tmpBag = pqBag.poll();
+      int n = pqJewerly.size();
+      for (int i = 0; i < n; i++) {
+        Jewerly tmpJewerly = pqJewerly.poll();
+        if (tmpPqJewerly.isEmpty() && tmpJewerly.m == tmpBag) {
+          answer += tmpJewerly.v;
+          break;
+        }
+        if (tmpJewerly.m <= tmpBag) { // 가벼운거 찾았으면 넣고,
+          tmpPqJewerly.add(tmpJewerly);
+        } else { // 안 가벼우면 다시 원래꺼에 넣어주고
+          pqJewerly.add(tmpJewerly);
           break;
         }
       }
+      if (tmpPqJewerly.isEmpty()) {
+        continue;
+      }
+      // 해당 무게 안에 가장 비싼거 추가.
+      answer += tmpPqJewerly.poll().v;
     }
+
     System.out.println(answer);
   }
 }
