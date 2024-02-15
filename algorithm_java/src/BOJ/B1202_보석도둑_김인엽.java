@@ -49,12 +49,12 @@ public class B1202_보석도둑_김인엽 {
     }
 
     long answer = 0; // 보석 가격 합 최댓값(int 범위로 해결 안됨)
-    PriorityQueue<Jewerly> tmpPqJewerly = new PriorityQueue<>((j1, j2) -> {
+    PriorityQueue<Jewerly> tmpPqJewerly = new PriorityQueue<>((j1, j2) -> { // 현 가방 무게 이하의 보석들 모음(가치 내림차순)
       if (j1.v == j2.v) {
         return j1.m - j2.m;
       }
       return j2.v - j1.v;
-    }); // 짬통
+    }); // 이곳의 peek값이 항상 내겐 최선의 답.
 
     // 가방 다 쓸 때까지
     while (!pqBag.isEmpty()) {
@@ -62,7 +62,7 @@ public class B1202_보석도둑_김인엽 {
       int n = pqJewerly.size();
       for (int i = 0; i < n; i++) {
         Jewerly tmpJewerly = pqJewerly.poll();
-        if (tmpPqJewerly.isEmpty() && tmpJewerly.m == tmpBag) {
+        if (tmpPqJewerly.isEmpty() && tmpJewerly.m == tmpBag) { // 비어있는데 무게가 딱 맞으면, 무조건 최고의 선택
           answer += tmpJewerly.v;
           break;
         }
@@ -73,6 +73,7 @@ public class B1202_보석도둑_김인엽 {
           break;
         }
       }
+      // 정답을 빼올게 비어있으면 패스
       if (tmpPqJewerly.isEmpty()) {
         continue;
       }
