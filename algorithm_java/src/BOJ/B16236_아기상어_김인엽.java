@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class B16236_아기상어_김인엽 {
@@ -18,14 +20,45 @@ public class B16236_아기상어_김인엽 {
       }
     }
 
-    void moveTo(Position to) { // x, y로 이동
+    void moveTo() {
       // 가중치 없는 그래프 => bfs로 최단 경로 찾기
+      // 1. bfs로 먹을 수 있는 곳 찾기
+      // 2. time 증가
+      Queue<ElementForQueue> queue = new ArrayDeque<>();
+      queue.add(new ElementForQueue(this.currentPosition, time)); // 현재 상태 넣기
 
+      while(!queue.isEmpty()) {
+        ElementForQueue element = queue.poll();
+        if(canEat(element.position)) { // 먹을 수 있는데를 찾앗으면, 끝
+          // 현재 위치 최신화
+          this.currentPosition = null;
+          break;
+        };
+        for(int i=0; i<dx.length; i++) {
 
-      this.currentPosition = to;
+        }
+      }
     }
 
+    boolean canEat(Position position) {
+      if(arr[position.x][position.y] < this.size) { // 해당 위치 물고기가 아기상어 사이즈보다 작으면 true
+        return true;
+      }
+      return false; // 아니면 false
+    }
+  }
 
+  static class ElementForQueue {
+    Position position;
+    int curTime;
+
+    public ElementForQueue() {
+    }
+
+    public ElementForQueue(Position position, int curTime) {
+      this.position = position;
+      this.curTime = curTime;
+    }
   }
 
   static class Position {
@@ -39,8 +72,8 @@ public class B16236_아기상어_김인엽 {
 
   static int[][] arr; // 맵
   static int N; // 맵 크기
-  static int[] dx = {-1,1,0,0}; // 상하좌우
-  static int[] dy = {0,0,-1,1};
+  static int[] dx = {-1,0,1,0}; // 상좌하우 : 상, 좌 일수록 우선순위가 높아서.
+  static int[] dy = {0,-1,0,1};
   static int[] remainFishes = new int[7]; // 남아있는 물고기 수(1~6까지만 사용. 각 크기에 대한 개수)
   static int canEatCnt; // 먹을 수 있는 애들 개수
   static int time; // 시간
