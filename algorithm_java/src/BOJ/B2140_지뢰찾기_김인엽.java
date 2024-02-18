@@ -41,11 +41,7 @@ public class B2140_지뢰찾기_김인엽 {
   private static void checkEdges() {
     // 맨 위
     for(int i=1; i<= N-2; i++) {
-      switch(arr[0][i]) {
-        case 0:
 
-          break;
-      }
     }
 
     // 맨 왼쪽

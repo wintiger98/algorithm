@@ -32,7 +32,7 @@ public class CombinationByNP {
         final int N = p.length;
         // step1 : 교환위치 찾기(꼭대기를 찾으면, 꼭대기 이전이 교환 위치)
         int i = N - 1;
-        while (p[i - 1] >= p[i])
+        while (i > 0 && p[i - 1] >= p[i])
             --i; // 뒤부터, 오르막 확인하면서 이동
 
         if (i == 0) // 내림차순 정렬인 상태 (= 마지막 순열) -> np 없음(다음 순열 없음)

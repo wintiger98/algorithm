@@ -21,6 +21,7 @@ public class B16236_아기상어_김인엽 {
       if(this.eatCnt == this.size) growUp(); // 먹은 수와 상어 크기가 같다면 성장!
     }
     void move2Target() { // 해당 타겟으로 이동
+      arr[this.position.x][this.position.y] = 0; // 있던 자리 비우기
       this.position = this.target.position;
       time += this.target.dist; // 시간 업데이트
     }
@@ -29,8 +30,10 @@ public class B16236_아기상어_김인엽 {
       boolean[][] visited = new boolean[N][N]; // 방문 여부
       queue.add(new PositionDist(this.position, 0)); // 현재 상어 위치
       PositionDist target = new PositionDist(null, Integer.MAX_VALUE);
+
       while(!queue.isEmpty()) {
         PositionDist pd = queue.poll();
+
         if(pd.dist > target.dist) continue; // 이미 거리가 더 지났다면, 패스
         // 만약 먹을 수 있다면, 타겟 후보로 선정
         if(arr[pd.position.x][pd.position.y] > 0 && arr[pd.position.x][pd.position.y] < this.size) {
@@ -38,7 +41,7 @@ public class B16236_아기상어_김인엽 {
             target = pd;
           } else { // =(target.dist == pd.dist) { // 거리가 같다면,
             if(target.position.x > pd.position.x) target = pd; // 더 위에 있으면 교체
-            else if(target.position.x == pd.position.y && target.position.y > pd.position.y) target = pd; // 그마저도 같다면, 더 왼쪽에 있으면 교체
+            else if(target.position.x == pd.position.x && target.position.y > pd.position.y) target = pd; // 그마저도 같다면, 더 왼쪽에 있으면 교체
           }
           continue;
         }
@@ -70,13 +73,6 @@ public class B16236_아기상어_김인엽 {
       this.dist = dist;
     }
 
-    @Override
-    public String toString() {
-      return "PositionDist{" +
-              "position=" + position +
-              ", dist=" + dist +
-              '}';
-    }
   }
 
   static class Position {
@@ -86,14 +82,6 @@ public class B16236_아기상어_김인엽 {
     public Position(int x, int y) {
       this.x = x;
       this.y = y;
-    }
-
-    @Override
-    public String toString() {
-      return "Position{" +
-              "x=" + x +
-              ", y=" + y +
-              '}';
     }
   }
 
@@ -125,7 +113,6 @@ public class B16236_아기상어_김인엽 {
     while(true) { // 아기상어가 먹을게 있을 동안
       babyShark.setTarget(); // 타겟 설정
       if(babyShark.target.position == null) break;
-      System.out.println("현재 타겟 : " + babyShark.target);
       babyShark.move2Target(); // 이동
       babyShark.eat(); // 냠냠
     }
