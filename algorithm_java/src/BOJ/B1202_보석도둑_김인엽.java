@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-// 	130268	1764
+// 	132228	1708
 public class B1202_보석도둑_김인엽 {
 
   static class Jewerly {
