@@ -2,18 +2,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
-
+// 13300	116
 public class B2636_치즈_김인엽 {
   static int N, M; // 가로, 세로
   static int[][] arr; // 맵
-
-  static int startX, startY; // 탐색 시작 지점
-
   static int[] dx = {1,-1,0,0}; // 방향
   static int[] dy = {0,0,1,-1};
+  static int startX, startY;
 
   // time: 녹아서 없어지는데 걸리는 시간(=arr에 해당 시간에 지나간거 모두 표기할때도 사용)
   // lastCheeses: 마지막 남아있던 치즈조각 개수
@@ -35,29 +32,28 @@ public class B2636_치즈_김인엽 {
         arr[i][j] = Integer.parseInt(st.nextToken());
       }
     }
-    // 탐색 시작
-    do {
-      time--;
-      print();
-    }while(bfs());
 
-    System.out.println(-(time+1) + "\n" + lastCheeses);
+    while(bfs()) {
+      time++;
+    }
+
+    System.out.println(time + "\n" + lastCheeses);
   }
 
   public static boolean bfs() { // 난 공기다 생각하고 탐색 시작!
-    int curCheeses = 0;
+    boolean[][] visited = new boolean[N][M]; // 방문여부 확인
+    int curCheeses = 0; // 지금 시간에서 부순 치즈 개수
     Queue<Pair> queue = new ArrayDeque<>();
-    queue.add(new Pair(startX, startY));
+    queue.add(new Pair(startX, startY)); // 0,0 에서 시작
+    visited[startX][startY] = true;
 
     while(!queue.isEmpty()) {
       Pair pair = queue.poll();
 
       // 만약 치즈에 닿으면, 부서버리기
       if(arr[pair.x][pair.y] == 1) {
-        arr[pair.x][pair.y] = time;
-        startX = pair.x;
-        startY = pair.y;
-        curCheeses++;
+        arr[pair.x][pair.y] = 0;
+        curCheeses++; // 부순 치즈 개수 증가
         continue;
       }
 
@@ -67,12 +63,14 @@ public class B2636_치즈_김인엽 {
         // 범위 벗어나면 패스
         if(cx < 0 || cx >= N || cy < 0 || cy >= M) continue;
         // 방문했다면 패스
-        if(arr[cx][cy] == time) continue;
+        if(visited[cx][cy]) continue;
+
         queue.add(new Pair(cx,cy));
+        visited[cx][cy] = true;
       }
     }
-    if(curCheeses>0) lastCheeses = curCheeses;
-    return curCheeses>0;
+    if(curCheeses>0) lastCheeses = curCheeses; // 부쉈다면, 마지막 치즈 개수 업데이트
+    return curCheeses>0; // 만약 치즈를 못부쉈으면 끝
   }
 
   static class Pair {
@@ -82,11 +80,5 @@ public class B2636_치즈_김인엽 {
       this.x = x;
       this.y = y;
     }
-  }
-
-  public static void print() {
-    System.out.println("현재 시각 : " + -time + "시간");
-    for(int[] a: arr) System.out.println(Arrays.toString(a));
-    System.out.println();
   }
 }
