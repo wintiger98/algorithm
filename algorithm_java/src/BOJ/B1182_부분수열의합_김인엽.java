@@ -21,7 +21,7 @@ public class B1182_부분수열의합_김인엽 {
       arr[i] = Integer.parseInt(st.nextToken());
     }
 
-    Arrays.sort(arr, Collections.reverseOrder());
+//    Arrays.sort(arr, Collections.reverseOrder());
 
     int answer = 0;
 
