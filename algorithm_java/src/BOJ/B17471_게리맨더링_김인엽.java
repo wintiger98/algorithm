@@ -60,6 +60,10 @@ public class B17471_게리맨더링_김인엽 {
     int cnt1 = 0; // 1팀 재귀 횟수
     visited = new boolean[N+1];
     for(int i=1; i<N+1; i++) {
+      // 이미 실패한 거니 바로 false
+      if(cnt0 >= 2 || cnt1 >= 2) {
+        return false;
+      };
       // 방문한 곳은 지나치기
       if(visited[i]) continue;
       // 1팀일 때 재귀하러
