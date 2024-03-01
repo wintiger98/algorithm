@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
+// 160536	708
 public class B20056_마법사상어와파이어볼_김인엽 {
 
   // 위부터 시계방향
