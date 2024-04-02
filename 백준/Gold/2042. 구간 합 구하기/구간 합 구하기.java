@@ -14,11 +14,10 @@ public class Main {
         for (int i = 1; i < N + 1; i++) {
             int check = i & -i;
             tree[i] = arr[i];
-//            check--;
-            while (check > 0) {
+            while (check < N+1) {
                 int count = check & -check;
                 tree[i] += tree[check];
-                check -= count;
+                check += count;
             }
         }
     }
