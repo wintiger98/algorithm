@@ -1,62 +1,80 @@
-import java.io.*;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        long[] arr = new long[N+1];
-        FenwickTree fenwickTree = new FenwickTree(N);
+    //https://www.acmicpc.net/problem/2042
+    //구간 합 구하기
+    static int N, M, K;
+    static long[] arr;
+    static long[] tree;
 
-        for(int i=1; i<=N; i++) {
-            arr[i] = Long.parseLong(br.readLine());
-            fenwickTree.update(i,  arr[i]);
-        }
-
-        for(int i=0; i<M+K; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            if(a == 1) {
-                int b = Integer.parseInt(st.nextToken());
-                long c = Long.parseLong(st.nextToken());
-                fenwickTree.update(b, c-arr[b]);
-                arr[b] = c;
-            } else if(a == 2) {
-                int b = Integer.parseInt(st.nextToken());
-                int c = Integer.parseInt(st.nextToken());
-                bw.write((fenwickTree.sum(c)- fenwickTree.sum(b-1)) + "\n");
+    static void init() {
+        for (int i = 1; i < N + 1; i++) {
+            int check = i & -i;
+            tree[i] = arr[i];
+//            check--;
+            while (check > 0) {
+                int count = check & -check;
+                tree[i] += tree[check];
+                check -= count;
             }
         }
-
-        bw.close();
     }
 
-    static class FenwickTree {
-        long[] tree;
-
-        public FenwickTree(int N) {
-            this.tree = new long[N+1];
+    static void update(int from, long to) {
+        int index = from;
+        while (index <= N) {
+            tree[index] += to;
+            int jump = index & -index;
+            index += jump;
         }
+        arr[from] = to;
+    }
 
-        public void update(int idx, long num) {
-            while(idx < tree.length) {
-                tree[idx] += num;
-                idx += (idx & -idx);
+    static long sum(int n) {
+        long ans = 0L;
+        while (n > 0) {
+            int check = n & -n;
+            ans += tree[n];
+            n -= check;
+        }
+        return ans;
+    }
+
+    static long get(int l, int r) {
+        return sum(r) - sum(l - 1);
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(bf.readLine());
+        StringBuilder ans = new StringBuilder();
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+        arr = new long[N + 1];
+        tree = new long[N + 1];
+        for (int i = 1; i <= N; i++) {
+            arr[i] = Long.parseLong(bf.readLine());
+            update(i, arr[i]);
+        }
+//        init();
+        for (int i = 0; i < M + K; i++) {
+            st = new StringTokenizer(bf.readLine());
+            int c = Integer.parseInt(st.nextToken());
+            if (c == 1) {
+                int from = Integer.parseInt(st.nextToken());
+                long to = Long.parseLong(st.nextToken());
+                update(from, to - arr[from]);
+                arr[from] = to;
+            } else {
+                int l = Integer.parseInt(st.nextToken());
+                int r = Integer.parseInt(st.nextToken());
+                ans.append(get(l, r)).append("\n");
             }
         }
-
-        public long sum(int idx) {
-            long result = 0;
-            while(idx > 0) {
-                result += tree[idx];
-                idx -= (idx & -idx);
-            }
-            return result;
-        }
+        System.out.println(ans);
     }
 }
