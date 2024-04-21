@@ -1,31 +1,42 @@
-import java.util.Arrays;
 import java.util.Scanner;
-import java.io.FileInputStream;
-// swea 1288번 문제
+
 public class Main {
 
-  public static void main(String[] args) throws Exception {
-    Scanner sc = new Scanner(System.in);
-    int T;
-    T=sc.nextInt();
+  public static void main(String[] args) {
 
-    for(int test_case = 1; test_case <= T; test_case++)
-    {
-      int n = sc.nextInt();
-      int answer = 1;
-      int[] visited = {0,0,0,0,0,0,0,0,0,0};
+    Scanner in = new Scanner(System.in);
 
-      while(Arrays.stream(visited).sum() < 10)
-      {
-        int tmp_n = n * answer;
-        while(tmp_n>0)
-        {
-          visited[tmp_n % 10] = 1;
-          tmp_n /= 10;
-        }
-        answer++;
+    int N = in.nextInt();
+    int K = in.nextInt();
+
+    // x는 lo <= x <= hi 의 범위를 갖는다.
+    long start = 1;
+    long end = K;
+
+    // lower-bound
+    while(start < end) {
+
+      long mid = (start + end) / 2;	// 임의의 x(mid)를 중간 값으로 잡는다.
+      long count = 0;
+
+      /*
+       *  임의의 x에 대해 i번 째 행을 나눔으로써 x보다 작거나 같은 원소의 개수
+       *  누적 합을 구한다.
+       *  이 때 각 행의 원소의 개수가 N(열 개수)를 초과하지 않는 선에서 합해주어야 한다.
+       */
+      for(int i = 1; i <= N; i++) {
+        count += Math.min(mid / i, N);
       }
-      System.out.println("#"+test_case+" "+(n*(answer-1)));
+
+      // count가 많다는 것은 임의의 x(mid)보다 작은 수가 B[K]보다 많다는 뜻
+      if(count < K) {
+        start = mid + 1;
+      }
+      else {
+        end = mid;
+      }
     }
+
+    System.out.println(end);
   }
 }
