@@ -53,7 +53,7 @@ public class Main {
         String bRoot = find(parent, b);
         if(aRoot.equals(bRoot)) return size.get(aRoot);
 
-        if(aRoot.compareTo(bRoot) >= 0) {
+        if(size.get(aRoot) < size.get(bRoot)) {
             // 부모 업데이트
             parent.put(aRoot, bRoot);
             // 사이즈도 업데이트
