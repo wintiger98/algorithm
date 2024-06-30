@@ -3,20 +3,25 @@ input = sys.stdin.readline
 
 N = int(input())
 
-dp = [0]*1_000_001
-in_times = [0]*1_000_001 # 들어온 시각
-out_times = [0]*1_000_001 # 종료 시각
+MAX_TIME = 1_000_001
+delta = [0] * MAX_TIME
 
 for _ in range(N):
     S, E = map(int, input().split())
-    in_times[S] += 1
-    out_times[E] += 1
+    delta[S] += 1
+    if E + 1 < MAX_TIME:
+        delta[E + 1] -= 1
 
-for i in range(1, 1_000_001):
-    dp[i] = dp[i-1] + in_times[i] - out_times[i-1] # 종료되는 시각에 사용 못해서
+# 누적 합 계산
+current_seats = 0
+occupied_seats = [0] * MAX_TIME
+
+for i in range(1, MAX_TIME):
+    current_seats += delta[i]
+    occupied_seats[i] = current_seats
 
 Q = int(input())
 times = list(map(int, input().split()))
 
 for t in times:
-    print(dp[t])
+    print(occupied_seats[t])
