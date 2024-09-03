@@ -4,22 +4,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 /**
  * 백준 2583
- * 예상 풀이 방법 : dfs
+ * 예상 풀이 방법 : bfs
  */
 public class Main {
 	static int N, M, K;
-	static List<Integer> areas = new ArrayList<>(); // 넓이 !
+	static PriorityQueue<Integer> areas = new PriorityQueue<>(); // 넓이 !
 
 	static int[] dx = {0, 1, 0, -1}; // 방향
 	static int[] dy = {1, 0, -1, 0};
-	static int[][] arr;
+	static boolean[][] arr;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,7 +29,7 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 
-		arr = new int[M][N]; // 배열
+		arr = new boolean[M][N]; // 배열
 
 		for(int i = 0; i < K; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -41,22 +40,21 @@ public class Main {
 
 			for(int j = x1; j < x2; j++) {
 				for(int k = y1; k < y2; k++) {
-					arr[j][k] = -1; // 그린 곳 색칠해놓기
+					arr[j][k] = true; // 그린 곳 색칠해놓기
 				}
 			}
 		}
 		for(int i = 0; i < M; i++) {
 			for(int j = 0; j < N; j++) {
-				if(arr[i][j] < 0)
+				if(arr[i][j])
 					continue; // 색칠된 곳은 건너뛰기
 				bfs(i, j); // 색칠 안 됐으면 탐색
 			}
 		}
 
 		bw.write(areas.size() + "\n");
-		areas.sort((a, b) -> a - b); // 오름차순
-		for(int area : areas) {
-			bw.write(area + " ");
+		while(!areas.isEmpty()) {
+			bw.write(areas.poll() + " ");
 		}
 		bw.close();
 	}
@@ -64,7 +62,7 @@ public class Main {
 	static void bfs(int x, int y) {
 		Queue<int[]> queue = new ArrayDeque<>();
 		queue.add(new int[] {x, y});
-		arr[x][y] = -1;
+		arr[x][y] = true;
 		int tmpSum = 0;
 
 		while(!queue.isEmpty()) {
@@ -76,11 +74,11 @@ public class Main {
 				int cy = pair[1] + dy[i];
 				if(!isInArr(cx, cy))
 					continue; // 영역 체크
-				if(arr[cx][cy] < 0)
+				if(arr[cx][cy])
 					continue; // 방문 or 직사각형 그림
 				queue.add(new int[] {cx, cy});
 
-				arr[cx][cy] = -1;
+				arr[cx][cy] = true;
 			}
 		}
 
