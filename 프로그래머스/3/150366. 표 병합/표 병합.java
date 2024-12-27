@@ -19,7 +19,7 @@ class Solution {
         
         for(String command : commands) {
             String[] strings = command.split(" ");
-            String majorCommand = strings[0];
+            String majorCommand = strings[0]; // UPDATE, MERGE, UNMERGE, PRINT
             
             int r, c, cellParentIdx, cellIndex;
             String value;
@@ -191,11 +191,8 @@ class Solution {
             if(i%100 > 50) {
                 i += 50;
             };
+            // 경로 압축 진행
             find(i);
-            // root 노드를 가리키고 있는 애들을 바꾸기
-            // if(find(i) == root) {
-            //     parent[i] = i;
-            // }
         }
         
         for(int i=101; i<parent.length; i++) {
@@ -203,8 +200,7 @@ class Solution {
             // 예시) 1051(10,51) -> 1101(11, 1)
             if(i%100 > 50) {
                 i += 50;
-            };
-            // find(i);
+            };            
             // root 노드를 가리키고 있는 애들을 바꾸기
             if(parent[i] == root) {
                 parent[i] = i;

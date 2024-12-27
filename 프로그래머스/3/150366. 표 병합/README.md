@@ -1,10 +1,10 @@
 # [level 3] 표 병합 - 150366 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/150366) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/150366#) 
 
 ### 성능 요약
 
-메모리: 95.1 MB, 시간: 19.79 ms
+메모리: 77.9 MB, 시간: 15.68 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 12월 26일 23:06:40
+2024년 12월 27일 10:05:40
 
 ### 문제 설명
 
