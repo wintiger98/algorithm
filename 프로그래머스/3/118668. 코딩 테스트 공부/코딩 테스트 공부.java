@@ -39,7 +39,8 @@ class Solution {
             }
         }
         
-        // dp 채우자!
+        // dp 채우자! 
+        // i=alp, j=cop 으로 하면, maxAlpReq보다 초기값이 클때에 대한 처리가 안되더라구요,,
         for(int i=0; i<=maxAlpReq; i++) {
             for(int j=0; j<=maxCopReq; j++) {
                 // 일단 공부로 알고력 올리기 vs 공부로 코딩력 올리기

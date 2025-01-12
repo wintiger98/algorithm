@@ -1,10 +1,10 @@
 # [level 3] 코딩 테스트 공부 - 118668 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/118668) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/118668#) 
 
 ### 성능 요약
 
-메모리: 54.6 MB, 시간: 336.77 ms
+메모리: 54.2 MB, 시간: 339.96 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 01월 12일 15:20:30
+2025년 01월 12일 15:22:52
 
 ### 문제 설명
 
