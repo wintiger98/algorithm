@@ -31,11 +31,12 @@ class Solution {
         int advTimeIndex = timeToIndex(adv_time);
 
         // 초기 구간의 합 계산
-        long maxSum = timeTable[advTimeIndex - 1];
+        long maxSum = timeTable[advTimeIndex];
         int maxStart = 0;
         
         // 슬라이딩 윈도우
         for (int start = 1; start + advTimeIndex - 1 < MAX_VALUE; start++) {
+            // right - left
             long sum = timeTable[start + advTimeIndex - 1] - timeTable[start - 1];
             if (sum > maxSum) {
                 maxSum = sum;
