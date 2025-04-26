@@ -1,45 +1,40 @@
 import java.util.*;
 
 class Solution {
-    // 유니온 파인드 해봐야지
+    static boolean[] visited;
+    static int[][] computers;
+    static int n;
     
     public int solution(int n, int[][] computers) {
-        int[] parents = new int[n];
-        init(parents); // 부모 배열 초기화
+        this.n = n;
+        this.computers = computers;
+        visited = new boolean[n];
         
+        int answer = 0;
         for(int i=0; i<n; i++) {
-            for(int j=0; j<n; j++) {
-                if(i == j) continue;
-                if(computers[i][j] == 1) {
-                    union(parents, i, j);
-                }
+            if(visited[i]) continue;
+            bfs(i);
+            answer++;
+        }
+        
+        return answer;
+    }
+    
+    static void bfs(int index) {
+        Queue<Integer> q = new ArrayDeque<>();
+        visited[index] = true;
+        q.add(index);
+        
+        while(!q.isEmpty()) {
+            int node = q.poll();
+            
+            for(int i=0; i<n; i++) {
+                if(visited[i]) continue;
+                if(computers[node][i] == 0) continue;
+            
+                q.add(i);
+                visited[i] = true;
             }
         }
-        Set<Integer> set = new HashSet<>();
-        for(int i=0; i<n; i++) {
-            set.add(find(parents, i));
-        }
-    
-        return set.size();
-    }
-    
-    private void init(int[] parents) {
-        for(int i=0; i<parents.length; i++) {
-            parents[i] = i;
-        }
-    }
-    
-    private int find(int[] parents, int v) {
-        if(parents[v] == v) return v;
-        return parents[v] = find(parents, parents[v]);
-    }
-    
-    private boolean union(int[] parents, int a, int b) {
-        int aRoot = find(parents, a);
-        int bRoot = find(parents, b);
-        
-        if(aRoot == bRoot) return false;
-        parents[bRoot] = aRoot;
-        return false;
     }
 }
