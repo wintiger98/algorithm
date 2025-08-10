@@ -71,7 +71,7 @@ class Solution {
                     answers.add(answer);
                     break;
             }
-            // print(command);
+            print(command);
             // printReal(command);
         }
         
