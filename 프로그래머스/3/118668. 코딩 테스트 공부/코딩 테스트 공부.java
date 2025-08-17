@@ -5,8 +5,8 @@ class Solution {
         int n = problemArray.length;
         Problem[] problems = new Problem[n];
         
-        int maxAlpReq = 0; // 최대 필요한 알고력
-        int maxCopReq = 0; // 최대 필요한 코딩력
+        int maxAlpReq = alp; // 최대 필요한 알고력
+        int maxCopReq = cop; // 최대 필요한 코딩력
         
         for(int i=0; i<n; i++) {
             problems[i] = new Problem(problemArray[i][0],
@@ -41,8 +41,8 @@ class Solution {
         
         // dp 채우자! 
         // i=alp, j=cop 으로 하면, maxAlpReq보다 초기값이 클때에 대한 처리가 안되더라구요,,
-        for(int i=0; i<=maxAlpReq; i++) {
-            for(int j=0; j<=maxCopReq; j++) {
+        for(int i=alp; i<=maxAlpReq; i++) {
+            for(int j=cop; j<=maxCopReq; j++) {
                 // 일단 공부로 알고력 올리기 vs 공부로 코딩력 올리기
                 dp[i+1][j] = Math.min(dp[i][j] + 1, dp[i+1][j]);
                 dp[i][j+1] = Math.min(dp[i][j] + 1, dp[i][j+1]);
@@ -52,11 +52,14 @@ class Solution {
                     // 만약 현재 알고력/코딩력이 요구치 미만이면 패스
                     if(i < problem.alpReq || j < problem.copReq) continue;
                     // dp(i,j) = min(dp(i,j), 기존 dp값 + cost)
-                    for(int k = i; k <= i+problem.alpRwd; k++) {
-                        for(int l = j; l <= j+problem.copRwd; l++) {
-                            dp[k][l] = Math.min(dp[k][l], dp[i][j] + problem.cost);
-                        }
-                    }
+                    // for(int k = i; k <= i+problem.alpRwd; k++) {
+                    //     for(int l = j; l <= j+problem.copRwd; l++) {
+                    //         dp[k][l] = Math.min(dp[k][l], dp[i][j] + problem.cost);
+                    //     }
+                    // }
+                    int k = Math.min(i + problem.alpRwd, maxAlpReq);
+                    int l = Math.min(j + problem.copRwd, maxCopReq);
+                    dp[k][l] = Math.min(dp[k][l], dp[i][j] + problem.cost);
                 }
             }
         }
